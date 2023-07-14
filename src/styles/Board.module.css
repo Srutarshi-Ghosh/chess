@@ -1,0 +1,15 @@
+
+.board {
+    display: block;
+    justify-content: center;
+    align-items: center;
+}
+
+.board-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.board-container {
+    border: 1px solid black;
+}
