@@ -1,20 +1,20 @@
 import React from "react";
-import { SquareColor } from "../constants/SquareColor"
-import styles from "../styles/Square.module.css"
+import SquareColor from "../constants/SquareColor";
+import styles from "../styles/Square.module.css";
 
 type SquareProps = {
-	color: SquareColor
-}
+	color: SquareColor;
+};
 
 const Square = (squareProps: SquareProps) => {
-
-	const { color } = squareProps
+	const { color } = squareProps;
 
 	return (
-		<div style={{backgroundColor: color}} className={`${styles["square-dimensions"]} ${styles["square"]}`}>
-			
-		</div>
-	)
-}
+		<div
+			style={{ backgroundColor: color }}
+			className={`${styles["square-dimensions"]} ${styles["square"]}`}
+		></div>
+	);
+};
 
-export default Square
+export default Square;

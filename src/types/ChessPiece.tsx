@@ -1,9 +1,9 @@
-import { PieceColor } from "../constants/PieceColor"
-import { PieceRank } from "../constants/PieceRank"
+import PieceColor from "../constants/PieceColor"
+import PieceType from "../constants/PieceType"
 
 
-type ChessPiece = {
-    pieceRank: PieceRank,
+export type ChessPiece = {
+    pieceType: PieceType,
     pieceColor: PieceColor
 }
 export default ChessPiece

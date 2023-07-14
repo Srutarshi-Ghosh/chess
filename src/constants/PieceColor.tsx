@@ -1,4 +1,5 @@
-export enum PieceColor {
+enum PieceColor {
 	WHITE,
 	BLACK
 }
+export default PieceColor
