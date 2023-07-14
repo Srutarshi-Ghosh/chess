@@ -4,16 +4,24 @@ import styles from "../styles/Square.module.css";
 
 type SquareProps = {
 	color: SquareColor;
+	hasPiece: Boolean;
+	pieceImageUrl: string | null;
 };
 
 const Square = (squareProps: SquareProps) => {
-	const { color } = squareProps;
+	const { color, hasPiece, pieceImageUrl } = squareProps;
+	const pieceImage = hasPiece ? require(`../assets/${pieceImageUrl}`) : null;
 
 	return (
 		<div
 			style={{ backgroundColor: color }}
 			className={`${styles["square-dimensions"]} ${styles["square"]}`}
-		></div>
+		>
+			{
+				(pieceImage) &&
+					<img src={pieceImage} alt="" />
+			}
+		</div>
 	);
 };
 

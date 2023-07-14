@@ -3,7 +3,7 @@ import BoardMap from "../constants/BoardMap";
 import PieceColor from "../constants/PieceColor";
 import getPieceFromValue from "./GetPieceFromValue";
 
-const setBoard = (): SquareData[][] => {
+const initializeBoard = (): SquareData[][] => {
 	const board: SquareData[][] = [];
 	var squareData: SquareData = null;
 
@@ -20,7 +20,7 @@ const setBoard = (): SquareData[][] => {
 			else if (squareValue < 0)
 				squareData = {
 					pieceColor: PieceColor.BLACK,
-					pieceType: getPieceFromValue(squareValue),
+					pieceType: getPieceFromValue(Math.abs(squareValue)),
 				};
 			else squareData = null;
 
@@ -31,3 +31,5 @@ const setBoard = (): SquareData[][] => {
 	return board
 
 };
+
+export default initializeBoard
