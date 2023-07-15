@@ -1,17 +1,19 @@
-import { forwardRef } from "react";
+import React from "react";
 import SquareColor from "../constants/SquareColor";
 import styles from "../styles/Square.module.css";
 import SquareData from "../types/SquareData";
 import getPieceImageUrl from "../functions/GetImageUrl";
+import BoardIndex from "../types/BoardIndex";
 
 type SquareProps = {
 	color: SquareColor;
 	pieceData: SquareData;
+	position: BoardIndex;
 	isSelected?: Boolean;
 };
 
 const Square = (squareProps: SquareProps) => {
-	const { color, pieceData, isSelected } = squareProps;
+	const { color, pieceData,  position, isSelected } = squareProps;
 
 	var pieceImageUrl, pieceImage;
 	if (pieceData) pieceImageUrl = getPieceImageUrl(pieceData);
@@ -19,6 +21,7 @@ const Square = (squareProps: SquareProps) => {
 	pieceImage = pieceData ? require(`../assets/${pieceImageUrl}`) : null;
 
 	var squareClasses = `${styles["square-dimensions"]} ${styles["square"]} ${pieceData ? styles["selectable"] : ""}`;
+
 
 	return (
 		<div

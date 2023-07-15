@@ -5,16 +5,30 @@ import SquareColor from "../constants/SquareColor";
 import Square from "./Square";
 import SquareData from "../types/SquareData";
 import getInitialSquareColorData from "../functions/GetInitialSquareColorData";
+import BoardIndex from "../types/BoardIndex";
+import Player from "../types/Player";
 
 const Board = () => {
 	const [boardData, setBoardData] = useState<SquareData[][]>(initializeBoard());
 	const [squareColorData, setSquareColorData] = useState<SquareColor[][]>(getInitialSquareColorData());
+	const [selectedPieceInex, setSelectedPieceIndex] = useState<BoardIndex | null>(null);
+	
+	var currentPlayer: Player = 1
 
 	// const squareReferenceMap = useRef<Array<Array<React.RefObject<HTMLDivElement>>>>([]);
 	// squareReferenceMap.current = Array(8).fill(0).map(() => Array(8).fill(createRef())); // 2D Array(8*8) of Refs to Square
 	// const [resetBoard, setResetBoard] = useState<Boolean>(true)
 
 	useEffect(() => {});
+
+	const selectSquare = (position: BoardIndex, pieceData: SquareData) => {
+		if(!pieceData)
+			return
+		const { posX, posY } = position
+		const { pieceType, pieceColor } = pieceData
+		
+
+	};
 
 	const drawBoard = () => {
 		return (
@@ -25,11 +39,13 @@ const Board = () => {
 							{boardData[rowIndex].map((_, colIndex) => {
 								let squareColor = squareColorData[rowIndex][colIndex];
 								let pieceData = boardData[rowIndex][colIndex];
+								let postion: BoardIndex = { posX: rowIndex, posY: colIndex };
 
 								return (
 									<Square
 										key={`${rowIndex},${colIndex}`}
 										color={squareColor}
+										position={postion}
 										pieceData={pieceData}
 									/>
 								);
