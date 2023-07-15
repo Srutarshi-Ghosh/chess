@@ -8,3 +8,7 @@
     margin: 2px solid black;
     justify-content: center;
 }
+
+.selectable {
+    cursor: pointer;
+}
