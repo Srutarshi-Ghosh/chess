@@ -32,7 +32,6 @@ const drawBoard = (boardData: SquareData[][], squareReferenceMap: any[][]) => {
 									key={`${rowIndex},${colIndex}`}
 									color={squareColor}
 									pieceData={squareData}
-									ref={squareRef}
 								/>
 							);
 						})}

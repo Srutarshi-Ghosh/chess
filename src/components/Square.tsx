@@ -10,7 +10,7 @@ type SquareProps = {
 	isSelected?: Boolean;
 };
 
-const Square =forwardRef<HTMLDivElement, SquareProps>((squareProps, ref) => {
+const Square = (squareProps: SquareProps) => {
 	const { color, pieceData, isSelected } = squareProps;
 
 	var pieceImageUrl, pieceImage;
@@ -24,7 +24,6 @@ const Square =forwardRef<HTMLDivElement, SquareProps>((squareProps, ref) => {
 		<div
 			style={{ backgroundColor: color }}
 			className={squareClasses}
-			ref={ref}
 		>
 			{pieceImage && (
 				<img
@@ -34,6 +33,6 @@ const Square =forwardRef<HTMLDivElement, SquareProps>((squareProps, ref) => {
 			)}
 		</div>
 	);
-});
+};
 
 export default Square;
