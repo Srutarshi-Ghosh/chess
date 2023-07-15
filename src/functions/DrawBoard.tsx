@@ -2,9 +2,9 @@ import styles from "../styles/Board.module.css";
 import Square from "../components/Square";
 import SquareColor from "../constants/SquareColor";
 import SquareData from "../types/SquareData";
-import getPieceImageUrl from "./GetImageUrl";
+import { useRef } from "react";
 
-const drawBoard = (boardData: SquareData[][]) => {
+const drawBoard = (boardData: SquareData[][], squareReferenceMap: any[][]) => {
 	var squareColor = SquareColor.WHITE;
 	const toogleSquareColor = () => {
 		squareColor = squareColor === SquareColor.BLACK ? SquareColor.WHITE : SquareColor.BLACK;
@@ -14,27 +14,25 @@ const drawBoard = (boardData: SquareData[][]) => {
 		<div className={styles["board-container"]}>
 			{boardData.map((_, rowIndex) => {
 				toogleSquareColor();
-				var hasPiece: boolean, pieceImageUrl: string | null;
+				squareReferenceMap.push([])
+
+				
+				console.log(squareReferenceMap[rowIndex-2])
 
 				return (
 					<div className={styles["board-row"]}>
 						{boardData[rowIndex].map((_, colIndex) => {
 							toogleSquareColor();
 							let squareData = boardData[rowIndex][colIndex];
-
-							if (squareData === null) {
-								hasPiece = false;
-								pieceImageUrl = null;
-							} else {
-								hasPiece = true;
-								pieceImageUrl = getPieceImageUrl(squareData);
-							}
+							let squareRef = useRef(null)
+							squareReferenceMap[rowIndex].push(squareRef)
 
 							return (
 								<Square
+									key={`${rowIndex},${colIndex}`}
 									color={squareColor}
-									hasPiece={hasPiece}
-									pieceImageUrl={pieceImageUrl}
+									pieceData={squareData}
+									ref={squareRef}
 								/>
 							);
 						})}
