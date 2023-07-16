@@ -5,7 +5,7 @@
 
 .square {
     display: flex;
-    margin: 2px solid black;
+    border: 1px solid black;
     justify-content: center;
 }
 
