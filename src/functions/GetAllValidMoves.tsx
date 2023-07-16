@@ -199,9 +199,10 @@ const getMovesForKing = (boardData: SquareData[][], position: BoardIndex, pieceC
 
 const getAllValidMoves = (boardData: SquareData[][], position: BoardIndex, piece: ChessPiece) => {
 	const { pieceColor, pieceType } = piece
+	const pieceTypeValue = getPieceFromValue(pieceType)
 	let validMoves: BoardIndex[]
 
-	switch(getPieceFromValue(pieceType)) {
+	switch(pieceTypeValue) {
 		case PieceType.PAWN:
 			validMoves = getMovesForPawn(boardData, position, pieceColor)
 			break

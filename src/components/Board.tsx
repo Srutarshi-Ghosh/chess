@@ -11,10 +11,9 @@ import getAllValidMoves from "../functions/GetAllValidMoves";
 import getHighlightSquaresData from "../functions/GetHighlightSquaresData";
 
 const Board = () => {
-	const initialSquareColorData = getDefaultSquareColorData();
 
 	const [boardData, setBoardData] = useState<SquareData[][]>(initializeBoard());
-	const [squareColorData, setSquareColorData] = useState<SquareColor[][]>(initialSquareColorData);
+	const [squareColorData, setSquareColorData] = useState<SquareColor[][]>(getDefaultSquareColorData());
 	const [selectedPieceInex, setSelectedPieceIndex] = useState<BoardIndex | null>(null);
 	const [shouldRender, setShouldRender] = useState<boolean>(true);
 
@@ -28,11 +27,11 @@ const Board = () => {
 		if (!pieceData) return;
 
 		const validMoves = getAllValidMoves(boardData, position, pieceData);
-		// console.log(validMoves);
 		const highlightedSquareColorData = getHighlightSquaresData(validMoves, squareColorData);
-		// console.log(highlightedSquareColorData);
 		setSquareColorData(highlightedSquareColorData);
-		console.log(squareColorData);
+		// console.log(validMoves);
+		// console.log(highlightedSquareColorData);
+		// console.log(squareColorData);
 		setShouldRender(prevState => !prevState);
 	};
 
