@@ -10,19 +10,16 @@ type SquareProps = {
 	pieceData: SquareData;
 	position: BoardIndex;
 	selectPiece: Function;
-	isSelected?: Boolean;
 };
 
 const Square = (squareProps: SquareProps) => {
-	const { color, pieceData, selectPiece,  position, isSelected } = squareProps;
+	const { color, pieceData, selectPiece, position } = squareProps;
+	const isSelectable = pieceData || color === SquareColor.HIGHLIGHT ? true : false;
 
-	var pieceImageUrl, pieceImage;
-	if (pieceData) pieceImageUrl = getPieceImageUrl(pieceData);
+	const pieceImageUrl = pieceData ? getPieceImageUrl(pieceData) : null;
+	const pieceImage = pieceImageUrl ? require(`../assets/${pieceImageUrl}`) : null;
 
-	pieceImage = pieceData ? require(`../assets/${pieceImageUrl}`) : null;
-
-	var squareClasses = `${styles["square-dimensions"]} ${styles["square"]} ${pieceData ? styles["selectable"] : ""}`;
-
+	var squareClasses = `${styles["square-dimensions"]} ${styles["square"]} ${isSelectable ? styles["selectable"] : ""}`;
 
 	return (
 		<div
