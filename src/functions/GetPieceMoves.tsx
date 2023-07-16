@@ -197,33 +197,33 @@ const getMovesForKing = (boardData: SquareData[][], position: BoardIndex, pieceC
 	return validMoves;
 };
 
-const getAllValidMoves = (boardData: SquareData[][], position: BoardIndex, piece: ChessPiece) => {
+const getPieceMoves = (boardData: SquareData[][], position: BoardIndex, piece: ChessPiece) => {
 	const { pieceColor, pieceType } = piece
 	const pieceTypeValue = getPieceFromValue(pieceType)
-	let validMoves: BoardIndex[]
+	let pieceMoves: BoardIndex[]
 
 	switch(pieceTypeValue) {
 		case PieceType.PAWN:
-			validMoves = getMovesForPawn(boardData, position, pieceColor)
+			pieceMoves = getMovesForPawn(boardData, position, pieceColor)
 			break
 		case PieceType.ROOK:
-			validMoves = getMovesForRook(boardData, position, pieceColor)
+			pieceMoves = getMovesForRook(boardData, position, pieceColor)
 			break 
 		case PieceType.HORSE:
-			validMoves = getMovesForHorse(boardData, position, pieceColor)
+			pieceMoves = getMovesForHorse(boardData, position, pieceColor)
 			break
 		case PieceType.BISHOP:
-			validMoves = getMovesForBishop(boardData, position, pieceColor)
+			pieceMoves = getMovesForBishop(boardData, position, pieceColor)
 			break
 		case PieceType.QUEEN:
-			validMoves = getMovesForQueen(boardData, position, pieceColor)
+			pieceMoves = getMovesForQueen(boardData, position, pieceColor)
 			break
 		case PieceType.KING:
-			validMoves = getMovesForKing(boardData, position, pieceColor)
+			pieceMoves = getMovesForKing(boardData, position, pieceColor)
 			break
 		default:
-			validMoves = []
+			pieceMoves = []
 	}
-	return validMoves
+	return pieceMoves
 };
-export default getAllValidMoves;
+export default getPieceMoves;
