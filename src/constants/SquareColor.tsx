@@ -1,7 +1,7 @@
 enum SquareColor {
 	WHITE = "white",
 	BLACK = "black",
-	HIGHLIGHT = "charteuse",
+	HIGHLIGHT = "chartreuse",
 	SELECTED = "green"
 }
 export default SquareColor

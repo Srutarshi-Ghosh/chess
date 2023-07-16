@@ -3,19 +3,21 @@ import PieceType from "../constants/PieceType";
 import BoardIndex from "../types/BoardIndex";
 import ChessPiece from "../types/ChessPiece";
 import SquareData from "../types/SquareData";
+import getPieceFromValue from "./GetPieceFromValue";
+
 
 const checkValidMove = (boardData: SquareData[][], position: BoardIndex, selectedPieceColor: PieceColor): Boolean => {
 	const { posX, posY } = position;
 	if (posX < 0 || posX >= 8 || posY < 0 || posY >= 8) return false;
 
-	if (boardData[posX][posY]?.pieceColor === selectedPieceColor) return false;
+	if (boardData[posX][posY] && boardData[posX][posY]?.pieceColor === selectedPieceColor) return false;
 
 	return true;
 };
 
 const checkEnemy = (boardData: SquareData[][], position: BoardIndex, selectedPieceColor: PieceColor): Boolean => {
 	const { posX, posY } = position;
-	return boardData[posX][posY]?.pieceColor !== selectedPieceColor ? true : false;
+	return (boardData[posX][posY] && boardData[posX][posY]?.pieceColor !== selectedPieceColor) ? true : false;
 };
 
 const getMovesForPawn = (boardData: SquareData[][], position: BoardIndex, pieceColor: PieceColor): BoardIndex[] => {
@@ -53,7 +55,7 @@ const getMovesForPawn = (boardData: SquareData[][], position: BoardIndex, pieceC
 		newPosition = { posX: posX + 1, posY: posY + 1 };
 		if (checkValidMove(boardData, newPosition, pieceColor) && checkEnemy(boardData, newPosition, pieceColor)) validMoves.push(newPosition);
 	}
-
+	console.log(position, validMoves)
 	return validMoves;
 };
 
@@ -199,7 +201,7 @@ const getAllValidMoves = (boardData: SquareData[][], position: BoardIndex, piece
 	const { pieceColor, pieceType } = piece
 	let validMoves: BoardIndex[]
 
-	switch(pieceType) {
+	switch(getPieceFromValue(pieceType)) {
 		case PieceType.PAWN:
 			validMoves = getMovesForPawn(boardData, position, pieceColor)
 			break
@@ -221,7 +223,6 @@ const getAllValidMoves = (boardData: SquareData[][], position: BoardIndex, piece
 		default:
 			validMoves = []
 	}
-
 	return validMoves
 };
 export default getAllValidMoves;

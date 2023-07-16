@@ -1,7 +1,7 @@
 import SquareColor from "../constants/SquareColor"
 import toogleSquareColor from "./ToogleSquareColor"
 
-const getInitialSquareColorData = () => {
+const getDefaultSquareColorData = () => {
   var squareColorData: SquareColor[][] = []
 	var squareColor = SquareColor.WHITE
 
@@ -18,4 +18,4 @@ const getInitialSquareColorData = () => {
 	return squareColorData
 }
 
-export default getInitialSquareColorData
+export default getDefaultSquareColorData

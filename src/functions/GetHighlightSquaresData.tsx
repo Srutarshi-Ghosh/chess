@@ -7,6 +7,7 @@ const getHighlightSquaresData = (listOfBoardIndexes: BoardIndex[], squareColorDa
 			colIndex = squareIndex.posY;
 		squareColorData[rowIndex][colIndex] = SquareColor.HIGHLIGHT;
 	});
+	// console.log(squareColorData)
 	return squareColorData;
 };
 

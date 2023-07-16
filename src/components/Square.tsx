@@ -9,11 +9,12 @@ type SquareProps = {
 	color: SquareColor;
 	pieceData: SquareData;
 	position: BoardIndex;
+	selectPiece: Function;
 	isSelected?: Boolean;
 };
 
 const Square = (squareProps: SquareProps) => {
-	const { color, pieceData,  position, isSelected } = squareProps;
+	const { color, pieceData, selectPiece,  position, isSelected } = squareProps;
 
 	var pieceImageUrl, pieceImage;
 	if (pieceData) pieceImageUrl = getPieceImageUrl(pieceData);
@@ -27,6 +28,7 @@ const Square = (squareProps: SquareProps) => {
 		<div
 			style={{ backgroundColor: color }}
 			className={squareClasses}
+			onClick={() => selectPiece(position, pieceData)}
 		>
 			{pieceImage && (
 				<img
