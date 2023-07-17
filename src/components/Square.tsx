@@ -5,6 +5,7 @@ import SquareData from "../types/SquareData";
 import getPieceImageUrl from "../functions/GetImageUrl";
 import BoardIndex from "../types/BoardIndex";
 import Player from "../constants/Player";
+import checkPlayerAndPieceColor from "../functions/CheckPlayerAndPieceColor";
 
 type SquareProps = {
 	color: SquareColor;
@@ -16,7 +17,7 @@ type SquareProps = {
 
 const Square = (squareProps: SquareProps) => {
 	const { color, pieceData, selectSquare, position, currentPlayer } = squareProps;
-	const isSelectable = pieceData || color === SquareColor.HIGHLIGHT ? true : false;
+	const isSelectable = (pieceData && checkPlayerAndPieceColor(currentPlayer, pieceData.pieceColor)) || color === SquareColor.HIGHLIGHT ? true : false;
 
 	const pieceImageUrl = pieceData ? getPieceImageUrl(pieceData) : null;
 	const pieceImage = pieceImageUrl ? require(`../assets/${pieceImageUrl}`) : null;

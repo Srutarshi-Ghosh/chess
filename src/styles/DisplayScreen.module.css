@@ -1,0 +1,9 @@
+.game-display-screen {
+	display: flex;
+	background-color: black;
+	color: white;
+	justify-content: center;
+	margin: 20px;
+	padding: 5px;
+	width: 300px;
+}
