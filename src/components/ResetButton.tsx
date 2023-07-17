@@ -10,7 +10,7 @@ const ResetButton = (resetButtonProps: ResetButtonProps) => {
 
 	return (
 		<button
-			// className={styles["reset-button"]}
+			className={`game-button`}
 			onClick={() => resetBoard()}
 		>
 			RESET

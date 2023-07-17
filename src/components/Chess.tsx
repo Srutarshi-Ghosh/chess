@@ -15,23 +15,21 @@ import BoardIndex from "../types/BoardIndex";
 import SquareData from "../types/SquareData";
 import Square from "./Square";
 import ResetButton from "./ResetButton";
+import GameControlArea from "./GameControlArea";
 
 const Chess = () => {
 	const initialSquareColorData = getDefaultSquareColorData();
-	const initialBoardData = initializeBoard()
+	const initialBoardData = initializeBoard();
+	const boardDataHistory: SquareData[][][] = [initialBoardData];
+
 	const [squareColorData, setSquareColorData] = useState<SquareColor[][]>(initialSquareColorData);
 	const [boardData, setBoardData] = useState<SquareData[][]>(initialBoardData);
 	const [selectedPieceInex, setSelectedPieceIndex] = useState<BoardIndex | null>(null);
 
 	var player: React.MutableRefObject<Player> = useRef(Player.WHITE);
-	const [displayScreenText, setDisplayScreenText] = useState(`Player ${Player[player.current]}'s turn`);
+	const displayScreenText = `Player ${Player[player.current]}'s turn`;
 
-	// const [shouldRender, setShouldRender] = useState<boolean>(true);
-	// const squareReferenceMap = useRef<Array<Array<React.RefObject<HTMLDivElement>>>>([]);
-	// squareReferenceMap.current = Array(8).fill(0).map(() => Array(8).fill(createRef())); // 2D Array(8*8) of Refs to Square
-	// const [resetBoard, setResetBoard] = useState<Boolean>(true)
-
-	const changeDisplayScreenText = () => setDisplayScreenText(`Player ${Player[player.current]}'s turn`);
+	// const changeDisplayScreenText = (displayScreenText: string) => setDisplayScreenText(displayScreenText);
 
 	const selectSquare = (position: BoardIndex, pieceData: SquareData, currentPlayer: Player) => {
 		if (!selectedPieceInex) {
@@ -43,9 +41,10 @@ const Chess = () => {
 		} else {
 			const { posX, posY } = position;
 			if (squareColorData[posX][posY] === SquareColor.HIGHLIGHT) {
+				boardDataHistory.push(boardData);
 				movePiece(boardData, setBoardData, selectedPieceInex, position);
 				player.current = changePlayer(player);
-				changeDisplayScreenText();
+				// changeDisplayScreenText(`Player ${Player[player.current]}'s turn`);
 			}
 		}
 	};
@@ -57,10 +56,19 @@ const Chess = () => {
 	};
 
 	const resetBoard = () => {
-		setBoardData(initialBoardData)
-		player.current = Player.WHITE
-		changeDisplayScreenText()
-	}
+		setBoardData(initialBoardData);
+		player.current = Player.WHITE;
+		// changeDisplayScreenText(`Player ${Player[player.current]}'s turn`);
+	};
+
+	const undoMove = () => {
+		if (boardDataHistory.length === 0) return;
+		const previousMove = boardDataHistory.pop();
+		if (previousMove) {
+			setBoardData(previousMove);
+			player.current = changePlayer(player);
+		}
+	};
 
 	const drawBoard = () => {
 		return (
@@ -98,7 +106,10 @@ const Chess = () => {
 		>
 			<DisplayScreen displayText={displayScreenText} />
 			<Board drawBoard={drawBoard} />
-			<ResetButton resetBoard={resetBoard} />
+			<GameControlArea
+				resetBoard={resetBoard}
+				undoMove={undoMove}
+			/>
 		</div>
 	);
 };

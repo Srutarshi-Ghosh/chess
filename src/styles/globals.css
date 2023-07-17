@@ -5,3 +5,8 @@
 	margin: auto;
 	height: 100vh;
 }
+
+.game-button {
+	padding: 5px;
+	margin: 20px;
+}

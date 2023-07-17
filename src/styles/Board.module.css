@@ -5,11 +5,3 @@
 	width: 100%;
 }
 
-.board-row {
-	display: flex;
-	flex-direction: row;
-}
-
-.board-container {
-	border: 1px solid black;
-}
