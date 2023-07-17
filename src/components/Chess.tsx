@@ -14,11 +14,13 @@ import movePiece from "../functions/MovePiece";
 import BoardIndex from "../types/BoardIndex";
 import SquareData from "../types/SquareData";
 import Square from "./Square";
+import ResetButton from "./ResetButton";
 
 const Chess = () => {
 	const initialSquareColorData = getDefaultSquareColorData();
+	const initialBoardData = initializeBoard()
 	const [squareColorData, setSquareColorData] = useState<SquareColor[][]>(initialSquareColorData);
-	const [boardData, setBoardData] = useState<SquareData[][]>(initializeBoard());
+	const [boardData, setBoardData] = useState<SquareData[][]>(initialBoardData);
 	const [selectedPieceInex, setSelectedPieceIndex] = useState<BoardIndex | null>(null);
 
 	var player: React.MutableRefObject<Player> = useRef(Player.WHITE);
@@ -29,7 +31,7 @@ const Chess = () => {
 	// squareReferenceMap.current = Array(8).fill(0).map(() => Array(8).fill(createRef())); // 2D Array(8*8) of Refs to Square
 	// const [resetBoard, setResetBoard] = useState<Boolean>(true)
 
-	const changeDisplayScreen = () => setDisplayScreenText(`Player ${Player[player.current]}'s turn`);
+	const changeDisplayScreenText = () => setDisplayScreenText(`Player ${Player[player.current]}'s turn`);
 
 	const selectSquare = (position: BoardIndex, pieceData: SquareData, currentPlayer: Player) => {
 		if (!selectedPieceInex) {
@@ -38,13 +40,12 @@ const Chess = () => {
 			const pieceMoves = getPieceMoves(boardData, position, pieceData);
 			changeSquareColorOnSelect(position, pieceMoves, squareColorData, setSquareColorData);
 			setSelectedPieceIndex(position);
-			// setShouldRender(prevState => !prevState);
 		} else {
 			const { posX, posY } = position;
 			if (squareColorData[posX][posY] === SquareColor.HIGHLIGHT) {
 				movePiece(boardData, setBoardData, selectedPieceInex, position);
 				player.current = changePlayer(player);
-				changeDisplayScreen();
+				changeDisplayScreenText();
 			}
 		}
 	};
@@ -54,6 +55,12 @@ const Chess = () => {
 		setSquareColorData(initialSquareColorData);
 		setSelectedPieceIndex(null);
 	};
+
+	const resetBoard = () => {
+		setBoardData(initialBoardData)
+		player.current = Player.WHITE
+		changeDisplayScreenText()
+	}
 
 	const drawBoard = () => {
 		return (
@@ -91,6 +98,7 @@ const Chess = () => {
 		>
 			<DisplayScreen displayText={displayScreenText} />
 			<Board drawBoard={drawBoard} />
+			<ResetButton resetBoard={resetBoard} />
 		</div>
 	);
 };
