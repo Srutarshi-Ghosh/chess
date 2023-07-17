@@ -1,14 +1,14 @@
 .square-dimensions {
-    width: 50px;
-    height: 50px;
+	width: 50px;
+	height: 50px;
 }
 
 .square {
-    display: flex;
-    border: 1px solid black;
-    justify-content: center;
+	display: flex;
+	border: 1px solid black;
+	justify-content: center;
 }
 
 .selectable {
-    cursor: pointer;
+	cursor: pointer;
 }
