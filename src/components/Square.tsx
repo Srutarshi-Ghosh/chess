@@ -4,16 +4,18 @@ import styles from "../styles/Square.module.css";
 import SquareData from "../types/SquareData";
 import getPieceImageUrl from "../functions/GetImageUrl";
 import BoardIndex from "../types/BoardIndex";
+import Player from "../constants/Player";
 
 type SquareProps = {
 	color: SquareColor;
 	pieceData: SquareData;
 	position: BoardIndex;
-	selectPiece: Function;
+	selectSquare: Function;
+	currentPlayer: Player;
 };
 
 const Square = (squareProps: SquareProps) => {
-	const { color, pieceData, selectPiece, position } = squareProps;
+	const { color, pieceData, selectSquare, position, currentPlayer } = squareProps;
 	const isSelectable = pieceData || color === SquareColor.HIGHLIGHT ? true : false;
 
 	const pieceImageUrl = pieceData ? getPieceImageUrl(pieceData) : null;
@@ -25,7 +27,7 @@ const Square = (squareProps: SquareProps) => {
 		<div
 			style={{ backgroundColor: color }}
 			className={squareClasses}
-			onClick={() => selectPiece(position, pieceData)}
+			onClick={() => selectSquare(position, pieceData, currentPlayer)}
 		>
 			{pieceImage && (
 				<img

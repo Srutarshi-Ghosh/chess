@@ -78,7 +78,7 @@ const getMovesForRook = (boardData: SquareData[][], position: BoardIndex, pieceC
 			};
 			if (checkValidMove(boardData, newPosition, pieceColor)) {
 				validMoves.push(newPosition);
-				if (checkEnemy(boardData, position, pieceColor)) break;
+				if (checkEnemy(boardData, newPosition, pieceColor)) break;
 			} else break;
 		}
 	}
@@ -117,6 +117,33 @@ const getMovesForBishop = (boardData: SquareData[][], position: BoardIndex, piec
 	const { posX, posY } = position;
 	const validMoves: BoardIndex[] = [];
 	const directions: number[][] = [
+		[1, 1],
+		[-1, 1],
+		[1, -1],
+		[-1, -1],
+	];
+	var newPosition: BoardIndex;
+
+	for (const direction of directions) {
+		for (let multiplicativeFactor = 1; multiplicativeFactor < 8; multiplicativeFactor++) {
+			newPosition = {
+				posX: posX + direction[0] * multiplicativeFactor,
+				posY: posY + direction[1] * multiplicativeFactor,
+			};
+			if (checkValidMove(boardData, newPosition, pieceColor)) {
+				validMoves.push(newPosition);
+				if (checkEnemy(boardData, newPosition, pieceColor)) break;
+			} else break;
+		}
+	}
+
+	return validMoves;
+};
+
+const getMovesForQueen = (boardData: SquareData[][], position: BoardIndex, pieceColor: PieceColor): BoardIndex[] => {
+	const { posX, posY } = position;
+	const validMoves: BoardIndex[] = [];
+	const directions: number[][] = [
 		[1, 0],
 		[-1, 0],
 		[0, 1],
@@ -136,34 +163,7 @@ const getMovesForBishop = (boardData: SquareData[][], position: BoardIndex, piec
 			};
 			if (checkValidMove(boardData, newPosition, pieceColor)) {
 				validMoves.push(newPosition);
-				if (checkEnemy(boardData, position, pieceColor)) break;
-			} else break;
-		}
-	}
-
-	return validMoves;
-};
-
-const getMovesForQueen = (boardData: SquareData[][], position: BoardIndex, pieceColor: PieceColor): BoardIndex[] => {
-	const { posX, posY } = position;
-	const validMoves: BoardIndex[] = [];
-	const directions: number[][] = [
-		[1, 1],
-		[-1, 1],
-		[1, -1],
-		[-1, -1],
-	];
-	var newPosition: BoardIndex;
-
-	for (const direction of directions) {
-		for (let multiplicativeFactor = 1; multiplicativeFactor < 8; multiplicativeFactor++) {
-			newPosition = {
-				posX: posX + direction[0] * multiplicativeFactor,
-				posY: posY + direction[1] * multiplicativeFactor,
-			};
-			if (checkValidMove(boardData, newPosition, pieceColor)) {
-				validMoves.push(newPosition);
-				if (checkEnemy(boardData, position, pieceColor)) break;
+				if (checkEnemy(boardData, newPosition, pieceColor)) break;
 			} else break;
 		}
 	}
