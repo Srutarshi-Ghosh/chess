@@ -14,7 +14,6 @@ import movePiece from "../functions/MovePiece";
 import BoardIndex from "../types/BoardIndex";
 import SquareData from "../types/SquareData";
 import Square from "./Square";
-import ResetButton from "./ResetButton";
 import GameControlArea from "./GameControlArea";
 
 const Chess = () => {
@@ -41,7 +40,9 @@ const Chess = () => {
 		} else {
 			const { posX, posY } = position;
 			if (squareColorData[posX][posY] === SquareColor.HIGHLIGHT) {
-				boardDataHistory.push(boardData);
+				let newBoardData = boardData.map(a => {return {...a}});
+				boardDataHistory.push([...newBoardData]);
+				console.log(boardDataHistory)
 				movePiece(boardData, setBoardData, selectedPieceInex, position);
 				player.current = changePlayer(player);
 				// changeDisplayScreenText(`Player ${Player[player.current]}'s turn`);
@@ -63,10 +64,11 @@ const Chess = () => {
 
 	const undoMove = () => {
 		if (boardDataHistory.length === 0) return;
+		console.log(boardDataHistory)
 		const previousMove = boardDataHistory.pop();
 		if (previousMove) {
-			setBoardData(previousMove);
 			player.current = changePlayer(player);
+			setBoardData(previousMove);
 		}
 	};
 
@@ -104,6 +106,7 @@ const Chess = () => {
 			className={`centered ${styles.chess}`}
 			onClick={deselectSquare}
 		>
+			<h1>CHESS</h1>
 			<DisplayScreen displayText={displayScreenText} />
 			<Board drawBoard={drawBoard} />
 			<GameControlArea
