@@ -15,6 +15,7 @@ import BoardIndex from "../types/BoardIndex";
 import SquareData from "../types/SquareData";
 import Square from "./Square";
 import GameControlArea from "./GameControlArea";
+import SelectableSquareColors from "../constants/SelectableSquareColors";
 
 const Chess = () => {
 	const initialSquareColorData = getDefaultSquareColorData();
@@ -35,11 +36,11 @@ const Chess = () => {
 			if (!pieceData || !checkPlayerAndPieceColor(currentPlayer, pieceData.pieceColor)) return;
 
 			const pieceMoves = getPieceMoves(boardData, position, pieceData);
-			changeSquareColorOnSelect(position, pieceMoves, squareColorData, setSquareColorData);
+			changeSquareColorOnSelect(boardData, position, pieceMoves, squareColorData, setSquareColorData);
 			setSelectedPieceIndex(position);
 		} else {
 			const { posX, posY } = position;
-			if (squareColorData[posX][posY] === SquareColor.HIGHLIGHT) {
+			if (SelectableSquareColors.includes(squareColorData[posX][posY])) {
 				let newBoardData = boardData.map(a => {return {...a}});
 				boardDataHistory.push([...newBoardData]);
 				console.log(boardDataHistory)
