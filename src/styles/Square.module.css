@@ -1,7 +1,7 @@
 .square-dimensions {
 	display: flex;
-	width: calc(70vmin / 8);
-	height: calc(70vmin / 8);
+	width: calc(65vmin / 8);
+	height: calc(65vmin / 8);
 }
 
 .square {
