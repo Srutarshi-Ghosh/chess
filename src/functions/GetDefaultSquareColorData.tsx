@@ -1,5 +1,9 @@
 import SquareColor from "../constants/SquareColor"
-import toogleSquareColor from "./ToogleSquareColor"
+
+
+const toogleSquareColor = (squareColor: SquareColor) => {
+	return squareColor === SquareColor.BLACK ? SquareColor.WHITE : SquareColor.BLACK;
+};
 
 const getDefaultSquareColorData = () => {
   var squareColorData: SquareColor[][] = []
