@@ -14,8 +14,9 @@ import movePiece from "../functions/MovePiece";
 import BoardIndex from "../types/BoardIndex";
 import SquareData from "../types/SquareData";
 import Square from "./Square";
-import GameControlArea from "./GameControlArea";
+import GameControlPanel from "./GameControlPanel";
 import SelectableSquareColors from "../constants/SelectableSquareColors";
+import RecordMovesPanel from "./RecordMovesPanel";
 
 const Chess = () => {
 	const initialSquareColorData = getDefaultSquareColorData();
@@ -41,9 +42,6 @@ const Chess = () => {
 		} else {
 			const { posX, posY } = position;
 			if (SelectableSquareColors.includes(squareColorData[posX][posY])) {
-				let newBoardData = boardData.map(a => {return {...a}});
-				boardDataHistory.push([...newBoardData]);
-				console.log(boardDataHistory)
 				movePiece(boardData, setBoardData, selectedPieceInex, position);
 				player.current = changePlayer(player);
 				// changeDisplayScreenText(`Player ${Player[player.current]}'s turn`);
@@ -65,7 +63,7 @@ const Chess = () => {
 
 	const undoMove = () => {
 		if (boardDataHistory.length === 0) return;
-		console.log(boardDataHistory)
+		console.log(boardDataHistory);
 		const previousMove = boardDataHistory.pop();
 		if (previousMove) {
 			player.current = changePlayer(player);
@@ -107,13 +105,16 @@ const Chess = () => {
 			className={`centered ${styles.chess}`}
 			onClick={deselectSquare}
 		>
-			<h1>CHESS</h1>
-			<DisplayScreen displayText={displayScreenText} />
-			<Board drawBoard={drawBoard} />
-			<GameControlArea
+			{/* <DisplayScreen displayText={displayScreenText} /> */}
+			{/* <GameControlArea
 				resetBoard={resetBoard}
-				undoMove={undoMove}
-			/>
+				// undoMove={undoMove}
+			/> */}
+			<div className={styles["game-area"]}>
+				<RecordMovesPanel />
+				<Board drawBoard={drawBoard} />
+				<RecordMovesPanel />
+			</div>
 		</div>
 	);
 };
