@@ -10,7 +10,12 @@
 
 .board-container {
 	border: 1px solid black;
-	height: 65vmin;
-	width: 65vmin;
-	margin: 20px;
+	height: 60vmin;
+	width: 60vmin;
+}
+
+.game-area {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
 }

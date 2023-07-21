@@ -2,6 +2,45 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	width: 100%;
+	flex-direction: column;
 }
 
+.square-names-row-container {
+	display: flex;
+	width: calc(100% - 15px);
+	margin-bottom: 3px;
+	position: relative;
+	left: calc(15px / 2);
+}
+
+.square-names-col-container {
+	display: flex;
+	height: 100%;
+	flex-direction: column;
+	width: 15px;
+}
+
+.board-row {
+	display: flex;
+	height: 100%;
+	flex-direction: row;
+}
+
+.square-names-row {
+	display: flex;
+	width: calc(100% / 8);
+	align-items: center;
+	justify-content: center;
+	font-weight: bolder;
+	font-size: larger;
+}
+
+.square-names-col {
+	display: flex;
+	height: calc(100% / 8);
+	align-items: center;
+	justify-content: center;
+	font-weight: bolder;
+	font-size: larger;
+	margin-right: 5px;
+}
