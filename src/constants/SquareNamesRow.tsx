@@ -1,2 +1,2 @@
-const SquareNamesRow = ["a", "b", "c", "d", "e", "f", "g", "h"];
+const SquareNamesRow: string[] = ["a", "b", "c", "d", "e", "f", "g", "h"];
 export default SquareNamesRow;
