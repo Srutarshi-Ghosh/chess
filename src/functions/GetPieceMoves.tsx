@@ -55,7 +55,6 @@ const getMovesForPawn = (boardData: SquareData[][], position: BoardIndex, pieceC
 		newPosition = { posX: posX + 1, posY: posY + 1 };
 		if (checkValidMove(boardData, newPosition, pieceColor) && checkEnemy(boardData, newPosition, pieceColor)) validMoves.push(newPosition);
 	}
-	console.log(position, validMoves)
 	return validMoves;
 };
 
