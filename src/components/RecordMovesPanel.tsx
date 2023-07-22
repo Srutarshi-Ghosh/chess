@@ -1,7 +1,13 @@
-import React from "react"
-import styles from "../styles/RecordMovesPanel.module.css"
+import React from "react";
+import styles from "../styles/RecordMovesPanel.module.css";
 
-const RecordMovesPanel = () => {
+type RecordMovesPanelProps = {
+	movesList: React.MutableRefObject<Array<string>>;
+};
+
+const RecordMovesPanel = (recordMovesPaneProps: RecordMovesPanelProps) => {
+	const { movesList } = recordMovesPaneProps;
+	// console.log(movesList)
 
 	return (
 		<div className={styles["container"]}>
@@ -10,15 +16,12 @@ const RecordMovesPanel = () => {
 			</div>
 
 			<div className={styles["moves-list"]}>
-				<div className={styles["moves-list-item"]}>
-					1. WHITE: c1 - c2
-				</div>
-				<div className={styles["moves-list-item"]}>
-					1. WHITE: c1 - c2
-				</div>
+				{movesList.current.map((move) => (
+					<div className={styles["moves-list-item"]}>{move}</div>
+				))}
 			</div>
 		</div>
-	)
-}
+	);
+};
 
-export default RecordMovesPanel
+export default RecordMovesPanel;
