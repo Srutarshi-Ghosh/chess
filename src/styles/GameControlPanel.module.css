@@ -1,0 +1,10 @@
+
+
+.game-control-panel-container {
+	display: flex;
+	flex-direction: column;
+	width: 35vmin;
+	height: 100%;
+	background-color: skyblue;
+	margin: 20px;
+}
