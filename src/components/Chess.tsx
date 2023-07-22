@@ -17,23 +17,25 @@ import Square from "./Square";
 import GameControlPanel from "./GameControlPanel";
 import SelectableSquareColors from "../constants/SelectableSquareColors";
 import RecordMovesPanel from "./RecordMovesPanel";
+import getMoveNotation from "../functions/GetMoveNotation";
 
 const Chess = () => {
 	const initialSquareColorData = getDefaultSquareColorData();
 	const initialBoardData = initializeBoard();
-	const boardDataHistory: SquareData[][][] = [initialBoardData];
 
 	const [squareColorData, setSquareColorData] = useState<SquareColor[][]>(initialSquareColorData);
 	const [boardData, setBoardData] = useState<SquareData[][]>(initialBoardData);
-	const [selectedPieceInex, setSelectedPieceIndex] = useState<BoardIndex | null>(null);
+	const [selectedPieceIndex, setSelectedPieceIndex] = useState<BoardIndex | null>(null);
 
+	var boardDataHistory: React.MutableRefObject<SquareData[][][]> = useRef([initialBoardData]);
+	var movesList: React.MutableRefObject<Array<string>> = useRef([]);
 	var player: React.MutableRefObject<Player> = useRef(Player.WHITE);
 	const displayScreenText = `Player ${Player[player.current]}'s turn`;
 
 	// const changeDisplayScreenText = (displayScreenText: string) => setDisplayScreenText(displayScreenText);
 
 	const selectSquare = (position: BoardIndex, pieceData: SquareData, currentPlayer: Player) => {
-		if (!selectedPieceInex) {
+		if (!selectedPieceIndex) {
 			if (!pieceData || !checkPlayerAndPieceColor(currentPlayer, pieceData.pieceColor)) return;
 
 			const pieceMoves = getPieceMoves(boardData, position, pieceData);
@@ -42,15 +44,21 @@ const Chess = () => {
 		} else {
 			const { posX, posY } = position;
 			if (SelectableSquareColors.includes(squareColorData[posX][posY])) {
-				movePiece(boardData, setBoardData, selectedPieceInex, position);
+				const moveNotation = getMoveNotation(boardData, selectedPieceIndex, position);
+				movesList.current.push(moveNotation);
+
+				boardDataHistory.current.push(boardData);
+				movePiece(boardData, setBoardData, selectedPieceIndex, position);
+
 				player.current = changePlayer(player);
+				console.log(boardDataHistory.current);
 				// changeDisplayScreenText(`Player ${Player[player.current]}'s turn`);
-			}
+			} 
 		}
 	};
 
 	const deselectSquare = () => {
-		if (!selectedPieceInex) return;
+		if (!selectedPieceIndex) return;
 		setSquareColorData(initialSquareColorData);
 		setSelectedPieceIndex(null);
 	};
@@ -62,9 +70,8 @@ const Chess = () => {
 	};
 
 	const undoMove = () => {
-		if (boardDataHistory.length === 0) return;
-		console.log(boardDataHistory);
-		const previousMove = boardDataHistory.pop();
+		if (boardDataHistory.current.length === 0) return;
+		const previousMove = boardDataHistory.current.pop();
 		if (previousMove) {
 			player.current = changePlayer(player);
 			setBoardData(previousMove);
@@ -111,9 +118,12 @@ const Chess = () => {
 				// undoMove={undoMove}
 			/> */}
 			<div className={styles["game-area"]}>
-				<RecordMovesPanel />
+				<RecordMovesPanel movesList={movesList} />
 				<Board drawBoard={drawBoard} />
-				<RecordMovesPanel />
+				<GameControlPanel
+					resetBoard={resetBoard}
+					undoMove={undoMove}
+				/>
 			</div>
 		</div>
 	);
