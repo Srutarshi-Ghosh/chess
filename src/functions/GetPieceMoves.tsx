@@ -25,21 +25,6 @@ const getMovesForPawn = (boardData: SquareData[][], position: BoardIndex, pieceC
 	const validMoves: BoardIndex[] = [];
 
 	if (pieceColor === PieceColor.BLACK) {
-		let newPosition = { posX: posX - 1, posY: posY };
-		if (checkValidMove(boardData, newPosition, pieceColor) && !checkEnemy(boardData, newPosition, pieceColor)) validMoves.push(newPosition);
-
-		if (posX === 6) {
-			//If pawn is moved for the first time it can move 2 places
-			newPosition = { posX: posX - 2, posY: posY };
-			if (validMoves.length > 0 && checkValidMove(boardData, newPosition, pieceColor) && !checkEnemy(boardData, newPosition, pieceColor)) validMoves.push(newPosition);
-		}
-
-		newPosition = { posX: posX - 1, posY: posY - 1 };
-		if (checkValidMove(boardData, newPosition, pieceColor) && checkEnemy(boardData, newPosition, pieceColor)) validMoves.push(newPosition);
-
-		newPosition = { posX: posX - 1, posY: posY + 1 };
-		if (checkValidMove(boardData, newPosition, pieceColor) && checkEnemy(boardData, newPosition, pieceColor)) validMoves.push(newPosition);
-	} else {
 		let newPosition = { posX: posX + 1, posY: posY };
 		if (checkValidMove(boardData, newPosition, pieceColor) && !checkEnemy(boardData, newPosition, pieceColor)) validMoves.push(newPosition);
 
@@ -53,6 +38,21 @@ const getMovesForPawn = (boardData: SquareData[][], position: BoardIndex, pieceC
 		if (checkValidMove(boardData, newPosition, pieceColor) && checkEnemy(boardData, newPosition, pieceColor)) validMoves.push(newPosition);
 
 		newPosition = { posX: posX + 1, posY: posY + 1 };
+		if (checkValidMove(boardData, newPosition, pieceColor) && checkEnemy(boardData, newPosition, pieceColor)) validMoves.push(newPosition);
+	} else {
+		let newPosition = { posX: posX - 1, posY: posY };
+		if (checkValidMove(boardData, newPosition, pieceColor) && !checkEnemy(boardData, newPosition, pieceColor)) validMoves.push(newPosition);
+
+		if (posX === 6) {
+			//If pawn is moved for the first time it can move 2 places
+			newPosition = { posX: posX - 2, posY: posY };
+			if (validMoves.length > 0 && checkValidMove(boardData, newPosition, pieceColor) && !checkEnemy(boardData, newPosition, pieceColor)) validMoves.push(newPosition);
+		}
+
+		newPosition = { posX: posX - 1, posY: posY - 1 };
+		if (checkValidMove(boardData, newPosition, pieceColor) && checkEnemy(boardData, newPosition, pieceColor)) validMoves.push(newPosition);
+
+		newPosition = { posX: posX - 1, posY: posY + 1 };
 		if (checkValidMove(boardData, newPosition, pieceColor) && checkEnemy(boardData, newPosition, pieceColor)) validMoves.push(newPosition);
 	}
 	return validMoves;

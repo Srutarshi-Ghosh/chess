@@ -112,11 +112,7 @@ const Chess = () => {
 			className={`centered ${styles.chess}`}
 			onClick={deselectSquare}
 		>
-			{/* <DisplayScreen displayText={displayScreenText} /> */}
-			{/* <GameControlArea
-				resetBoard={resetBoard}
-				// undoMove={undoMove}
-			/> */}
+		
 			<div className={styles["game-area"]}>
 				<RecordMovesPanel movesList={movesList} />
 				<Board drawBoard={drawBoard} />
