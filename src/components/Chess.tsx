@@ -18,7 +18,8 @@ import getMoveNotation from "../functions/GetMoveNotation";
 import { useDispatch, useSelector } from "react-redux";
 import { changePlayer } from "../reducers/playerReducer";
 import { RootState } from "../store";
-import { addBoardState } from "../reducers/boardReducer";
+import { updateBoardState } from "../reducers/boardReducer";
+import selectSquare from "../functions/SelectSquare";
 
 const Chess = () => {
 	const dispatch = useDispatch();
@@ -26,9 +27,9 @@ const Chess = () => {
 	const initialSquareColorData = getDefaultSquareColorData();
 
 	const boardData = useSelector((state: RootState) => state.board.boardData);
+	const currentPlayer = useSelector((state: RootState) => state.player.currentPlayer);
 
 	const [squareColorData, setSquareColorData] = useState<SquareColor[][]>(initialSquareColorData);
-	// const [boardData, setBoardData] = useState<SquareData[][]>(initialBoardData);
 	const [selectedPieceIndex, setSelectedPieceIndex] = useState<BoardIndex | null>(null);
 
 	var movesList: React.MutableRefObject<Array<string>> = useRef([]);
@@ -36,26 +37,30 @@ const Chess = () => {
 	// const displayScreenText = `Player ${Player[player.current]}'s turn`;
 	// const changeDisplayScreenText = (displayScreenText: string) => setDisplayScreenText(displayScreenText);
 
-	const selectSquare = (position: BoardIndex, pieceData: SquareData, currentPlayer: Player) => {
-		if (!selectedPieceIndex) {
-			if (!pieceData || !checkPlayerAndPieceColor(currentPlayer, pieceData.pieceColor)) return;
-
-			const pieceMoves = getPieceMoves(boardData, position, pieceData);
-			changeSquareColorOnSelect(boardData, position, pieceMoves, squareColorData, setSquareColorData);
-			setSelectedPieceIndex(position);
-		} else {
-			const { posX, posY } = position;
-			if (SelectableSquareColors.includes(squareColorData[posX][posY])) {
-				const moveNotation = getMoveNotation(boardData, selectedPieceIndex, position);
-				movesList.current.push(moveNotation);
-
-				const newBoardData = movePiece(boardData, selectedPieceIndex, position);
-				dispatch(addBoardState(newBoardData));
-				dispatch(changePlayer());
-				// changeDisplayScreenText(`Player ${Player[player.current]}'s turn`);
-			}
-		}
+	const handleSelectSquare = (position: BoardIndex, pieceData: SquareData) => {
+		selectSquare(position, pieceData, currentPlayer, boardData, squareColorData, setSquareColorData, selectedPieceIndex, setSelectedPieceIndex, movesList, dispatch);
 	};
+
+	// const selectSquare = (position: BoardIndex, pieceData: SquareData, currentPlayer: Player) => {
+	// 	if (!selectedPieceIndex) {
+	// 		if (!pieceData || !checkPlayerAndPieceColor(currentPlayer, pieceData.pieceColor)) return;
+
+	// 		const pieceMoves = getPieceMoves(boardData, position, pieceData);
+	// 		changeSquareColorOnSelect(boardData, position, pieceMoves, squareColorData, setSquareColorData);
+	// 		setSelectedPieceIndex(position);
+	// 	} else {
+	// 		const { posX, posY } = position;
+	// 		if (SelectableSquareColors.includes(squareColorData[posX][posY])) {
+	// 			const moveNotation = getMoveNotation(boardData, selectedPieceIndex, position);
+	// 			movesList.current.push(moveNotation);
+
+	// 			const newBoardData = movePiece(boardData, selectedPieceIndex, position);
+	// 			dispatch(updateBoardState(newBoardData));
+	// 			dispatch(changePlayer());
+	// 			// changeDisplayScreenText(`Player ${Player[player.current]}'s turn`);
+	// 		}
+	// 	}
+	// };
 
 	const deselectSquare = () => {
 		if (!selectedPieceIndex) return;
@@ -65,7 +70,7 @@ const Chess = () => {
 
 	return (
 		<div
-			className={`centered ${styles.chess}`}
+			className={`centered ${styles["chess"]}`}
 			onClick={deselectSquare}
 		>
 			{/* <DisplayScreen displayText={displayScreenText} /> */}
@@ -77,7 +82,7 @@ const Chess = () => {
 				<RecordMovesPanel movesList={movesList} />
 				<Board
 					squareColorData={squareColorData}
-					selectSquare={selectSquare}
+					selectSquare={handleSelectSquare}
 				/>
 				<GameControlPanel />
 			</div>

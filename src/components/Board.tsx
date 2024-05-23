@@ -2,12 +2,12 @@ import React from "react";
 import styles from "../styles/Board.module.css";
 import SquareNamesRow from "../constants/SquareNamesRow";
 import SquareNamesCol from "../constants/SquareNamesCol";
-import SquareData from "../types/SquareData";
 import SquareColor from "../constants/SquareColor";
 import BoardIndex from "../types/BoardIndex";
 import Square from "./Square";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
+import SquareData from "../types/SquareData";
 
 type BoardProps = {
 	selectSquare: Function;
@@ -18,6 +18,9 @@ const Board = (boardProps: BoardProps) => {
 	const { squareColorData, selectSquare } = boardProps;
 
 	const boardData = useSelector((state: RootState) => state.board.boardData);
+	
+	
+	
 
 	const drawBoard = () => {
 		return (
