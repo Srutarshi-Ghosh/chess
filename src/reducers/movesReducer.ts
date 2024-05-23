@@ -12,14 +12,17 @@ const movesSlice = createSlice({
 	name: "moves",
 	initialState,
 	reducers: {
-		addMove: (state, action: PayloadAction<string>) => {
+		addMove: (state: MovesState, action: PayloadAction<string>) => {
 			state.movesList = [...state.movesList, action.payload];
 		},
-		resetMoves: (state) => {
+		undoLastMove: (state: MovesState) => {
+			state.movesList = state.movesList.splice(0, state.movesList.length - 1)
+		},
+		resetMoves: (state: MovesState) => {
 			state.movesList = [];
 		},
 	},
 });
 
-export const { addMove, resetMoves } = movesSlice.actions;
+export const { addMove, undoLastMove, resetMoves } = movesSlice.actions;
 export default movesSlice.reducer;
