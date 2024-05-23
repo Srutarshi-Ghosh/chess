@@ -4,7 +4,6 @@ import DisplayScreen from "./DisplayScreen";
 import styles from "../styles/Chess.module.css";
 import Player from "../constants/Player";
 import SquareColor from "../constants/SquareColor";
-import changePlayer from "../functions/ChangePlayer";
 import changeSquareColorOnSelect from "../functions/ChangeSquareColorOnSelect";
 import checkPlayerAndPieceColor from "../functions/CheckPlayerAndPieceColor";
 import getDefaultSquareColorData from "../functions/GetDefaultSquareColorData";
@@ -18,20 +17,26 @@ import GameControlPanel from "./GameControlPanel";
 import SelectableSquareColors from "../constants/SelectableSquareColors";
 import RecordMovesPanel from "./RecordMovesPanel";
 import getMoveNotation from "../functions/GetMoveNotation";
+import { useDispatch, useSelector } from "react-redux";
+import { changePlayer, resetPlayer } from "../reducers/playerReducer";
+import { RootState } from "../store";
+import { addBoardState, getLastBoardState, resetBoardState } from "../reducers/boardReducer";
 
 const Chess = () => {
+	const dispatch = useDispatch();
+
 	const initialSquareColorData = getDefaultSquareColorData();
-	const initialBoardData = initializeBoard();
 
 	const [squareColorData, setSquareColorData] = useState<SquareColor[][]>(initialSquareColorData);
-	const [boardData, setBoardData] = useState<SquareData[][]>(initialBoardData);
+	// const [boardData, setBoardData] = useState<SquareData[][]>(initialBoardData);
 	const [selectedPieceIndex, setSelectedPieceIndex] = useState<BoardIndex | null>(null);
 
-	var boardDataHistory: React.MutableRefObject<SquareData[][][]> = useRef([initialBoardData]);
-	var movesList: React.MutableRefObject<Array<string>> = useRef([]);
-	var player: React.MutableRefObject<Player> = useRef(Player.WHITE);
-	const displayScreenText = `Player ${Player[player.current]}'s turn`;
+	const boardData = useSelector((state: RootState) => state.board.boardData);
 
+	var movesList: React.MutableRefObject<Array<string>> = useRef([]);
+	// var player: React.MutableRefObject<Player> = useRef(Player.WHITE);
+
+	// const displayScreenText = `Player ${Player[player.current]}'s turn`;
 	// const changeDisplayScreenText = (displayScreenText: string) => setDisplayScreenText(displayScreenText);
 
 	const selectSquare = (position: BoardIndex, pieceData: SquareData, currentPlayer: Player) => {
@@ -47,13 +52,11 @@ const Chess = () => {
 				const moveNotation = getMoveNotation(boardData, selectedPieceIndex, position);
 				movesList.current.push(moveNotation);
 
-				boardDataHistory.current.push(boardData);
-				movePiece(boardData, setBoardData, selectedPieceIndex, position);
-
-				player.current = changePlayer(player);
-				console.log(boardDataHistory.current);
+				const newBoardData = movePiece(boardData, selectedPieceIndex, position);
+				dispatch(addBoardState(newBoardData));
+				dispatch(changePlayer());
 				// changeDisplayScreenText(`Player ${Player[player.current]}'s turn`);
-			} 
+			}
 		}
 	};
 
@@ -64,18 +67,19 @@ const Chess = () => {
 	};
 
 	const resetBoard = () => {
-		setBoardData(initialBoardData);
-		player.current = Player.WHITE;
+		dispatch(resetBoardState());
+		dispatch(resetPlayer());
 		// changeDisplayScreenText(`Player ${Player[player.current]}'s turn`);
 	};
 
 	const undoMove = () => {
-		if (boardDataHistory.current.length === 0) return;
-		const previousMove = boardDataHistory.current.pop();
-		if (previousMove) {
-			player.current = changePlayer(player);
-			setBoardData(previousMove);
-		}
+		// if (boardDataHistory.current.length === 0) return;
+		// const previousMove = boardDataHistory.current.pop();
+		// if (previousMove) {
+		// 	dispatch(changePlayer());
+		// 	setBoardData(previousMove);
+		// }
+		dispatch(getLastBoardState());
 	};
 
 	const drawBoard = () => {
@@ -96,7 +100,6 @@ const Chess = () => {
 										position={postion}
 										selectSquare={selectSquare}
 										pieceData={pieceData}
-										currentPlayer={player.current}
 									/>
 								);
 							})}
@@ -112,14 +115,15 @@ const Chess = () => {
 			className={`centered ${styles.chess}`}
 			onClick={deselectSquare}
 		>
-		
+			{/* <DisplayScreen displayText={displayScreenText} /> */}
+			{/* <GameControlArea
+				resetBoard={resetBoard}
+				// undoMove={undoMove}
+			/> */}
 			<div className={styles["game-area"]}>
 				<RecordMovesPanel movesList={movesList} />
 				<Board drawBoard={drawBoard} />
-				<GameControlPanel
-					resetBoard={resetBoard}
-					undoMove={undoMove}
-				/>
+				<GameControlPanel	/>
 			</div>
 		</div>
 	);

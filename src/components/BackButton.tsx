@@ -1,12 +1,14 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { getLastBoardState } from "../reducers/boardReducer";
 // import styles from "../styles/ResetButton.module.css";
 
-type BackButtonProps = {
-	undoMove: Function;
-};
+const BackButton = () => {
+	const dispatch = useDispatch();
 
-const BackButton = (backButtonProps: BackButtonProps) => {
-	const { undoMove } = backButtonProps;
+	const undoMove = () => {
+		dispatch(getLastBoardState());
+	};
 
 	return (
 		<button

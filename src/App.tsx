@@ -1,13 +1,17 @@
-import React from 'react';
-import './App.css';
-import GamePage from './components/GamePage';
+import React from "react";
+import "./App.css";
+import GamePage from "./components/GamePage";
+import { Provider } from "react-redux";
+import store from "./store";
 
 function App() {
-  return (
-    <div className="App">
-      <GamePage />
-    </div>
-  );
+	return (
+		<Provider store={store}>
+			<div className="App">
+				<GamePage />
+			</div>
+		</Provider>
+	);
 }
 
 export default App;
