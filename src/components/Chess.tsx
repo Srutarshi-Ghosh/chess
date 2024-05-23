@@ -8,11 +8,9 @@ import changeSquareColorOnSelect from "../functions/ChangeSquareColorOnSelect";
 import checkPlayerAndPieceColor from "../functions/CheckPlayerAndPieceColor";
 import getDefaultSquareColorData from "../functions/GetDefaultSquareColorData";
 import getPieceMoves from "../functions/GetPieceMoves";
-import initializeBoard from "../functions/InitializeBoard";
 import movePiece from "../functions/MovePiece";
 import BoardIndex from "../types/BoardIndex";
 import SquareData from "../types/SquareData";
-import Square from "./Square";
 import GameControlPanel from "./GameControlPanel";
 import SelectableSquareColors from "../constants/SelectableSquareColors";
 import RecordMovesPanel from "./RecordMovesPanel";
@@ -34,7 +32,6 @@ const Chess = () => {
 	const [selectedPieceIndex, setSelectedPieceIndex] = useState<BoardIndex | null>(null);
 
 	var movesList: React.MutableRefObject<Array<string>> = useRef([]);
-	// var player: React.MutableRefObject<Player> = useRef(Player.WHITE);
 
 	// const displayScreenText = `Player ${Player[player.current]}'s turn`;
 	// const changeDisplayScreenText = (displayScreenText: string) => setDisplayScreenText(displayScreenText);
