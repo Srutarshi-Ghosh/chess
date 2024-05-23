@@ -9,7 +9,7 @@ const BackButton = () => {
 
 	const undoMove = () => {
 		dispatch(getLastBoardState());
-		dispatch(changePlayer())
+		dispatch(changePlayer());
 	};
 
 	return (

@@ -1,12 +1,10 @@
 import React from "react";
 import styles from "../styles/RecordMovesPanel.module.css";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
 
-type RecordMovesPanelProps = {
-	movesList: React.MutableRefObject<Array<string>>;
-};
-
-const RecordMovesPanel = (recordMovesPaneProps: RecordMovesPanelProps) => {
-	const { movesList } = recordMovesPaneProps;
+const RecordMovesPanel = () => {
+	const movesList: string[] = useSelector((state: RootState) => state.moves.movesList);
 	// console.log(movesList)
 
 	return (
@@ -16,7 +14,7 @@ const RecordMovesPanel = (recordMovesPaneProps: RecordMovesPanelProps) => {
 			</div>
 
 			<div className={styles["moves-list"]}>
-				{movesList.current.map((move) => (
+				{movesList.map((move) => (
 					<div className={styles["moves-list-item"]}>{move}</div>
 				))}
 			</div>

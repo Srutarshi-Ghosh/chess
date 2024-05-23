@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { resetBoardState } from "../reducers/boardReducer";
 import { resetPlayer } from "../reducers/playerReducer";
+import { resetMoves } from "../reducers/movesReducer";
 // import styles from "../styles/ResetButton.module.css";
 
 
@@ -11,6 +12,7 @@ const ResetButton = () => {
 	const resetBoard = () => {
 		dispatch(resetBoardState());
 		dispatch(resetPlayer());
+		dispatch(resetMoves())
 	}
 
 	return (

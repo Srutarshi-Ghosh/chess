@@ -10,6 +10,7 @@ import BoardIndex from "../types/BoardIndex";
 import Player from "../constants/Player";
 import SelectableSquareColors from "../constants/SelectableSquareColors";
 import SquareColor from "../constants/SquareColor";
+import { addMove } from "../reducers/movesReducer";
 
 const selectSquare = (
 	position: BoardIndex,
@@ -20,7 +21,7 @@ const selectSquare = (
 	setSquareColorData: (squareColorData: SquareColor[][]) => void,
 	selectedPieceIndex: BoardIndex | null,
 	setSelectedPieceIndex: (index: BoardIndex | null) => void,
-	movesList: { current: string[] },
+	movesList: string[],
 	dispatch: Function
 ) => {
 	if (!selectedPieceIndex) handlePieceSelection(position, pieceData, currentPlayer, boardData, squareColorData, setSquareColorData, setSelectedPieceIndex);
@@ -49,17 +50,18 @@ const handlePieceMovement = (
 	selectedPieceIndex: BoardIndex,
 	squareColorData: SquareColor[][],
 	setSelectedPieceIndex: (index: BoardIndex | null) => void,
-	movesList: { current: string[] },
+	movesList: string[],
 	dispatch: Function
 ) => {
 	const { posX, posY } = position;
 	if (SelectableSquareColors.includes(squareColorData[posX][posY])) {
 		const moveNotation = getMoveNotation(boardData, selectedPieceIndex, position);
-		movesList.current.push(moveNotation);
-
 		const newBoardData = movePiece(boardData, selectedPieceIndex, position);
+		
+		dispatch(addMove(moveNotation));
 		dispatch(updateBoardState(newBoardData));
 		dispatch(changePlayer());
+
 		// changeDisplayScreenText(`Player ${Player[player.current]}'s turn`);
 	}
 	setSelectedPieceIndex(null);

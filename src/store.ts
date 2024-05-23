@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import playerReducer from "./reducers/playerReducer";
 import { enableMapSet } from "immer";
 import boardReducer from "./reducers/boardReducer";
+import movesReducer from "./reducers/movesReducer";
 
 enableMapSet();
 
@@ -9,6 +10,7 @@ const store = configureStore({
 	reducer: {
 		player: playerReducer,
 		board: boardReducer,
+		moves: movesReducer,
 	},
 });
 
