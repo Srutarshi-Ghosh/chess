@@ -1,10 +1,13 @@
 .chess {
 	display: flex;
 	flex-direction: column;
+	width: 100%;
+	
 }
 
 .game-area {
 	display: flex;
 	flex-direction: row;
 	width: 100%;
+	justify-content: space-around;
 }
