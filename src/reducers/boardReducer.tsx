@@ -18,7 +18,7 @@ const boardSlice = createSlice({
 	name: "board",
 	initialState,
 	reducers: {
-		addBoardState: (state: BoardState, action: PayloadAction<SquareData[][]>) => {
+		updateBoardState: (state: BoardState, action: PayloadAction<SquareData[][]>) => {
 			const newBoardData = action.payload;
 			state.boardDataHistory = [...state.boardDataHistory, state.boardData];
 			state.boardData = newBoardData;
@@ -37,5 +37,5 @@ const boardSlice = createSlice({
 	},
 });
 
-export const { addBoardState, getLastBoardState, resetBoardState } = boardSlice.actions;
+export const { updateBoardState, getLastBoardState, resetBoardState } = boardSlice.actions;
 export default boardSlice.reducer;
