@@ -2,7 +2,7 @@ import React from "react";
 import SquareColor from "../constants/SquareColor";
 import styles from "../styles/Square.module.css";
 import SquareData from "../types/SquareData";
-import getPieceImageUrl from "../functions/GetImageUrl";
+import getPieceImage from "../functions/GetPieceImage";
 import BoardIndex from "../types/BoardIndex";
 import checkPlayerAndPieceColor from "../functions/CheckPlayerAndPieceColor";
 import SelectableSquareColors from "../constants/SelectableSquareColors";
@@ -21,8 +21,7 @@ const Square = (squareProps: SquareProps) => {
 	const currentPlayer = useSelector((state: RootState) => state.player.currentPlayer);
 	const isSelectable = (pieceData && checkPlayerAndPieceColor(currentPlayer, pieceData.pieceColor)) || SelectableSquareColors.includes(color) ? true : false;
 
-	const pieceImageUrl = pieceData ? getPieceImageUrl(pieceData) : null;
-	const pieceImage = pieceImageUrl ? require(`../assets/${pieceImageUrl}`) : null;
+	const pieceImage = pieceData ? getPieceImage(pieceData) : null;
 
 	var squareClasses = `${styles["square-dimensions"]} ${styles["square"]} ${isSelectable ? styles["selectable"] : ""}`;
 
