@@ -1,8 +1,25 @@
+.board-container {
+	border: 1px solid black;
+	height: 70vmin;
+	width: 70vmin;
+}
+
 .board {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
+}
+
+.board-row-container {
+	display: flex;
+	height: 100%;
+	flex-direction: row;
+}
+
+.board-row {
+	display: flex;
+	flex-direction: row;
 }
 
 .square-names-row-container {
@@ -18,12 +35,6 @@
 	height: 100%;
 	flex-direction: column;
 	width: 15px;
-}
-
-.board-row {
-	display: flex;
-	height: 100%;
-	flex-direction: row;
 }
 
 .square-names-row {

@@ -3,17 +3,6 @@
 	flex-direction: column;
 }
 
-.board-row {
-	display: flex;
-	flex-direction: row;
-}
-
-.board-container {
-	border: 1px solid black;
-	height: 70vmin;
-	width: 70vmin;
-}
-
 .game-area {
 	display: flex;
 	flex-direction: row;

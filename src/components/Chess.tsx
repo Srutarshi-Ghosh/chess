@@ -18,20 +18,20 @@ import SelectableSquareColors from "../constants/SelectableSquareColors";
 import RecordMovesPanel from "./RecordMovesPanel";
 import getMoveNotation from "../functions/GetMoveNotation";
 import { useDispatch, useSelector } from "react-redux";
-import { changePlayer, resetPlayer } from "../reducers/playerReducer";
+import { changePlayer } from "../reducers/playerReducer";
 import { RootState } from "../store";
-import { addBoardState, getLastBoardState, resetBoardState } from "../reducers/boardReducer";
+import { addBoardState } from "../reducers/boardReducer";
 
 const Chess = () => {
 	const dispatch = useDispatch();
 
 	const initialSquareColorData = getDefaultSquareColorData();
 
+	const boardData = useSelector((state: RootState) => state.board.boardData);
+
 	const [squareColorData, setSquareColorData] = useState<SquareColor[][]>(initialSquareColorData);
 	// const [boardData, setBoardData] = useState<SquareData[][]>(initialBoardData);
 	const [selectedPieceIndex, setSelectedPieceIndex] = useState<BoardIndex | null>(null);
-
-	const boardData = useSelector((state: RootState) => state.board.boardData);
 
 	var movesList: React.MutableRefObject<Array<string>> = useRef([]);
 	// var player: React.MutableRefObject<Player> = useRef(Player.WHITE);
@@ -66,50 +66,6 @@ const Chess = () => {
 		setSelectedPieceIndex(null);
 	};
 
-	const resetBoard = () => {
-		dispatch(resetBoardState());
-		dispatch(resetPlayer());
-		// changeDisplayScreenText(`Player ${Player[player.current]}'s turn`);
-	};
-
-	const undoMove = () => {
-		// if (boardDataHistory.current.length === 0) return;
-		// const previousMove = boardDataHistory.current.pop();
-		// if (previousMove) {
-		// 	dispatch(changePlayer());
-		// 	setBoardData(previousMove);
-		// }
-		dispatch(getLastBoardState());
-	};
-
-	const drawBoard = () => {
-		return (
-			<div className={styles["board-container"]}>
-				{boardData.map((_, rowIndex) => {
-					return (
-						<div className={styles["board-row"]}>
-							{boardData[rowIndex].map((_, colIndex) => {
-								let squareColor = squareColorData[rowIndex][colIndex];
-								let pieceData = boardData[rowIndex][colIndex];
-								let postion: BoardIndex = { posX: rowIndex, posY: colIndex };
-
-								return (
-									<Square
-										key={`${rowIndex},${colIndex}`}
-										color={squareColor}
-										position={postion}
-										selectSquare={selectSquare}
-										pieceData={pieceData}
-									/>
-								);
-							})}
-						</div>
-					);
-				})}
-			</div>
-		);
-	};
-
 	return (
 		<div
 			className={`centered ${styles.chess}`}
@@ -122,8 +78,11 @@ const Chess = () => {
 			/> */}
 			<div className={styles["game-area"]}>
 				<RecordMovesPanel movesList={movesList} />
-				<Board drawBoard={drawBoard} />
-				<GameControlPanel	/>
+				<Board
+					squareColorData={squareColorData}
+					selectSquare={selectSquare}
+				/>
+				<GameControlPanel />
 			</div>
 		</div>
 	);

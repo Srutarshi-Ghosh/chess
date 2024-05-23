@@ -11,7 +11,7 @@ const initialBoardState = initializeBoard();
 
 const initialState: BoardState = {
 	boardData: initialBoardState,
-	boardDataHistory: [structuredClone(initialBoardState)],
+	boardDataHistory: [],
 };
 
 const boardSlice = createSlice({
@@ -20,19 +20,19 @@ const boardSlice = createSlice({
 	reducers: {
 		addBoardState: (state: BoardState, action: PayloadAction<SquareData[][]>) => {
 			const newBoardData = action.payload;
+			state.boardDataHistory = [...state.boardDataHistory, state.boardData];
 			state.boardData = newBoardData;
-			state.boardDataHistory.push(structuredClone(newBoardData));
 		},
-		getLastBoardState: (state) => {
-			const length = state.boardDataHistory.length;
-			if (length > 1) {
-				state.boardData = state.boardDataHistory[length - 1];
+		getLastBoardState: (state: BoardState) => {
+			const boardDataHistoryLength = state.boardDataHistory.length;
+			if (boardDataHistoryLength > 0) {
+				state.boardData = state.boardDataHistory[boardDataHistoryLength - 1];
 				state.boardDataHistory.pop();
 			}
 		},
 		resetBoardState: (state: BoardState) => {
 			state.boardData = initialState.boardData;
-			state.boardDataHistory = initialState.boardDataHistory;
+			state.boardDataHistory = [];
 		},
 	},
 });
