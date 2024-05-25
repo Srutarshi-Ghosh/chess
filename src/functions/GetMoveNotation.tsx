@@ -13,9 +13,10 @@ const getMoveNotation = (boardData: SquareData[][], oldPosition: BoardIndex, new
 	const newPositionSquareName = getSquareName(newPosition);
 
 	var moveNotation = `${PieceColor[pieceData.pieceColor]} - ${oldPositionSquareName} ${newPositionSquareName}`;
+	const capturingPiece = boardData[oldPosX][oldPosY];
 	const capturedPiece = boardData[newPosX][newPosY];
-	if (capturedPiece) 
-		moveNotation += ` | ${capturedPiece.pieceType} takes ${capturedPiece.pieceType}`;
+	if (capturedPiece && capturingPiece) 
+		moveNotation += ` | ${capturingPiece.pieceType} takes ${capturedPiece.pieceType}`;
 
 	return moveNotation;
 };
