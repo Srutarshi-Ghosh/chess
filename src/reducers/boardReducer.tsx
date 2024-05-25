@@ -23,11 +23,11 @@ const boardSlice = createSlice({
 			state.boardDataHistory = [...state.boardDataHistory, state.boardData];
 			state.boardData = newBoardData;
 		},
-		getLastBoardState: (state: BoardState) => {
+		undoBoardState: (state: BoardState) => {
 			const boardDataHistoryLength = state.boardDataHistory.length;
 			if (boardDataHistoryLength > 0) {
 				state.boardData = state.boardDataHistory[boardDataHistoryLength - 1];
-				state.boardDataHistory.pop();
+				state.boardDataHistory = state.boardDataHistory.splice(0, boardDataHistoryLength - 1);
 			}
 		},
 		resetBoardState: (state: BoardState) => {
@@ -37,5 +37,5 @@ const boardSlice = createSlice({
 	},
 });
 
-export const { updateBoardState, getLastBoardState, resetBoardState } = boardSlice.actions;
+export const { updateBoardState, undoBoardState, resetBoardState } = boardSlice.actions;
 export default boardSlice.reducer;

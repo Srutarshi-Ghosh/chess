@@ -4,11 +4,7 @@ import DisplayScreen from "./DisplayScreen";
 import styles from "../styles/Chess.module.css";
 import Player from "../constants/Player";
 import SquareColor from "../constants/SquareColor";
-import changeSquareColorOnSelect from "../functions/ChangeSquareColorOnSelect";
-import checkPlayerAndPieceColor from "../functions/CheckPlayerAndPieceColor";
 import getDefaultSquareColorData from "../functions/GetDefaultSquareColorData";
-import getPieceMoves from "../functions/GetPieceMoves";
-import movePiece from "../functions/MovePiece";
 import BoardIndex from "../types/BoardIndex";
 import SquareData from "../types/SquareData";
 import GameControlPanel from "./GameControlPanel";
@@ -16,9 +12,7 @@ import SelectableSquareColors from "../constants/SelectableSquareColors";
 import RecordMovesPanel from "./RecordMovesPanel";
 import getMoveNotation from "../functions/GetMoveNotation";
 import { useDispatch, useSelector } from "react-redux";
-import { changePlayer } from "../reducers/playerReducer";
 import { RootState } from "../store";
-import { updateBoardState } from "../reducers/boardReducer";
 import selectSquare from "../functions/SelectSquare";
 
 const Chess = () => {
