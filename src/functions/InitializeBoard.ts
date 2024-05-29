@@ -28,8 +28,7 @@ const initializeBoard = (): SquareData[][] => {
 		}
 	}
 
-	return board
-
+	return board;
 };
 
-export default initializeBoard
+export default initializeBoard;

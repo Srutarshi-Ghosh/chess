@@ -1,4 +1,4 @@
-import { updateBoardState } from "../reducers/boardReducer";
+import { updateBoardState } from "../reducers/BoardReducer";
 import { changePlayer } from "../reducers/playerReducer";
 import checkPlayerAndPieceColor from "./CheckPlayerAndPieceColor";
 import getPieceMoves from "./GetPieceMoves";
@@ -10,7 +10,7 @@ import BoardIndex from "../types/BoardIndex";
 import Player from "../constants/Player";
 import SelectableSquareColors from "../constants/SelectableSquareColors";
 import SquareColor from "../constants/SquareColor";
-import { addMove } from "../reducers/movesReducer";
+import { addMove } from "../reducers/MovesReducer";
 
 const selectSquare = (
 	position: BoardIndex,
@@ -57,7 +57,7 @@ const handlePieceMovement = (
 	if (SelectableSquareColors.includes(squareColorData[posX][posY])) {
 		const moveNotation = getMoveNotation(boardData, selectedPieceIndex, position);
 		const newBoardData = movePiece(boardData, selectedPieceIndex, position);
-		
+
 		dispatch(addMove(moveNotation));
 		dispatch(updateBoardState(newBoardData));
 		dispatch(changePlayer());

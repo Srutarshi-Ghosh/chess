@@ -1,8 +1,8 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { resetBoardState } from "../reducers/boardReducer";
+import { resetBoardState } from "../reducers/BoardReducer";
 import { resetPlayer } from "../reducers/playerReducer";
-import { resetMoves } from "../reducers/movesReducer";
+import { resetMoves } from "../reducers/MovesReducer";
 // import styles from "../styles/ResetButton.module.css";
 
 

@@ -16,7 +16,7 @@ const movesSlice = createSlice({
 			state.movesList = [...state.movesList, action.payload];
 		},
 		undoLastMove: (state: MovesState) => {
-			state.movesList = state.movesList.splice(0, state.movesList.length - 1)
+			state.movesList = state.movesList.splice(0, state.movesList.length - 1);
 		},
 		resetMoves: (state: MovesState) => {
 			state.movesList = [];
