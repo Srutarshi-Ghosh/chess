@@ -1,5 +1,5 @@
 import { updateBoardState } from "../reducers/BoardReducer";
-import { changePlayer } from "../reducers/playerReducer";
+import { changePlayer } from "../reducers/PlayerReducer";
 import checkPlayerAndPieceColor from "./CheckPlayerAndPieceColor";
 import getPieceMoves from "./GetPieceMoves";
 import changeSquareColorOnSelect from "./ChangeSquareColorOnSelect";

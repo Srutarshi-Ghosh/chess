@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { undoBoardState } from "../reducers/BoardReducer";
-import { changePlayer } from "../reducers/playerReducer";
+import { changePlayer } from "../reducers/PlayerReducer";
 import { undoLastMove } from "../reducers/MovesReducer";
 // import styles from "../styles/ResetButton.module.css";
 

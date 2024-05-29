@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import playerReducer from "./reducers/playerReducer";
+import playerReducer from "./reducers/PlayerReducer";
 import { enableMapSet } from "immer";
 import boardReducer from "./reducers/BoardReducer";
 import movesReducer from "./reducers/MovesReducer";
