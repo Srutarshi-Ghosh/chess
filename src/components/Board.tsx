@@ -7,7 +7,6 @@ import BoardIndex from "../types/BoardIndex";
 import Square from "./Square";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
-import SquareData from "../types/SquareData";
 
 type BoardProps = {
 	selectSquare: Function;
@@ -18,19 +17,16 @@ const Board = (boardProps: BoardProps) => {
 	const { squareColorData, selectSquare } = boardProps;
 
 	const boardData = useSelector((state: RootState) => state.board.boardData);
-	
-	
-	
 
 	const drawBoard = () => {
 		return (
 			<div className={styles["board-container"]}>
-				{boardData.map((_, rowIndex) => {
+				{boardData.map((row, rowIndex) => {
 					return (
 						<div className={styles["board-row"]}>
-							{boardData[rowIndex].map((_, colIndex) => {
+							{row.map((col, colIndex) => {
 								let squareColor = squareColorData[rowIndex][colIndex];
-								let pieceData = boardData[rowIndex][colIndex];
+								let pieceData = col;
 								let postion: BoardIndex = { posX: rowIndex, posY: colIndex };
 
 								return (
